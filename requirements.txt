@@ -1,0 +1,6 @@
+pandas>=2.0.0
+SQLAlchemy>=2.0.0
+psycopg2-binary>=2.9.6
+dagster>=1.6.0
+dagit>=1.6.0 
+python-dotenv>=1.0.0
