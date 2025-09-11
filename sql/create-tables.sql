@@ -1,6 +1,9 @@
+DROP TABLE IF EXISTS elections, candidates, finances, scores CASCADE;
+
 CREATE TABLE candidates (
-    candidate_id SERIAL PRIMARY KEY,
-    recipient_id TEXT,
+    election TEXT NOT NULL,
+    recipient_id TEXT NOT NULL,
+    seat TEXT NOT NULL,
     campaign_id BIGINT,
     full_name TEXT,
     first_name TEXT,
@@ -8,15 +11,15 @@ CREATE TABLE candidates (
     gender CHAR(1),
     party TEXT,
     state CHAR(2),
-    seat TEXT,
     icpsr_id TEXT,
-    fec_id TEXT
+    fec_id TEXT,
+    PRIMARY KEY (election, recipient_id, seat)
 );
 
 CREATE TABLE elections (
-    election_id SERIAL PRIMARY KEY,
-    candidate_id INT NOT NULL,
-    election TEXT,
+    election TEXT NOT NULL,
+    recipient_id TEXT NOT NULL,
+    seat TEXT NOT NULL,
     cycle INT,
     fec_year INT,
     distcyc TEXT,
@@ -28,12 +31,14 @@ CREATE TABLE elections (
     general_winner CHAR(1),
     primary_vote_pct FLOAT,
     primary_winner CHAR(1),
-    FOREIGN KEY (candidate_id) REFERENCES candidates(candidate_id)
+    PRIMARY KEY (recipient_id, election, seat),
+    FOREIGN KEY (recipient_id, election, seat) REFERENCES candidates(recipient_id, election, seat)
 );
 
 CREATE TABLE finances (
-    finance_id SERIAL PRIMARY KEY,
-    candidate_id INT NOT NULL,
+    election TEXT NOT NULL,
+    recipient_id TEXT NOT NULL,
+    seat TEXT NOT NULL,
     total_receipts NUMERIC,
     total_disbursements NUMERIC,
     total_indiv_contribs NUMERIC,
@@ -45,12 +50,14 @@ CREATE TABLE finances (
     ind_exp_oppose NUMERIC,
     num_givers INT,
     num_givers_total INT,
-    FOREIGN KEY (candidate_id) REFERENCES candidates(candidate_id)
+    PRIMARY KEY (recipient_id, election, seat),
+    FOREIGN KEY (recipient_id, election, seat) REFERENCES candidates(recipient_id, election, seat)
 );
 
 CREATE TABLE scores (
-    score_id SERIAL PRIMARY KEY,
-    candidate_id INT NOT NULL,
+    election TEXT NOT NULL,
+    recipient_id TEXT NOT NULL,
+    seat TEXT NOT NULL,
     cfscore FLOAT,
     cfscore_dyn FLOAT,
     contributor_cfscore FLOAT,
@@ -59,5 +66,6 @@ CREATE TABLE scores (
     dwnom2 FLOAT,
     irt_cfscore FLOAT,
     composite_score FLOAT,
-    FOREIGN KEY (candidate_id) REFERENCES candidates(candidate_id)
+    PRIMARY KEY (recipient_id, election, seat),
+    FOREIGN KEY (recipient_id, election, seat) REFERENCES candidates(recipient_id, election, seat)
 );
