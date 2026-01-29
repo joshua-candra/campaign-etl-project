@@ -1,6 +1,4 @@
-DROP TABLE IF EXISTS elections, candidates, finances, scores CASCADE;
-
-CREATE TABLE candidates (
+CREATE TABLE IF NOT EXISTS candidates (
     election TEXT NOT NULL,
     recipient_id TEXT NOT NULL,
     seat TEXT NOT NULL,
@@ -11,12 +9,13 @@ CREATE TABLE candidates (
     gender CHAR(1),
     party TEXT,
     state CHAR(2),
+    rec_type TEXT,
     icpsr_id TEXT,
     fec_id TEXT,
     PRIMARY KEY (election, recipient_id, seat)
 );
 
-CREATE TABLE elections (
+CREATE TABLE IF NOT EXISTS elections (
     election TEXT NOT NULL,
     recipient_id TEXT NOT NULL,
     seat TEXT NOT NULL,
@@ -31,11 +30,11 @@ CREATE TABLE elections (
     general_winner CHAR(1),
     primary_vote_pct FLOAT,
     primary_winner CHAR(1),
-    PRIMARY KEY (recipient_id, election, seat),
-    FOREIGN KEY (recipient_id, election, seat) REFERENCES candidates(recipient_id, election, seat)
+    PRIMARY KEY (election, recipient_id, seat),
+    FOREIGN KEY (election, recipient_id, seat) REFERENCES candidates(election, recipient_id, seat)
 );
 
-CREATE TABLE finances (
+CREATE TABLE IF NOT EXISTS finances (
     election TEXT NOT NULL,
     recipient_id TEXT NOT NULL,
     seat TEXT NOT NULL,
@@ -50,11 +49,11 @@ CREATE TABLE finances (
     ind_exp_oppose NUMERIC,
     num_givers INT,
     num_givers_total INT,
-    PRIMARY KEY (recipient_id, election, seat),
-    FOREIGN KEY (recipient_id, election, seat) REFERENCES candidates(recipient_id, election, seat)
+    PRIMARY KEY (election, recipient_id, seat),
+    FOREIGN KEY (election, recipient_id, seat) REFERENCES candidates(election, recipient_id, seat)
 );
 
-CREATE TABLE scores (
+CREATE TABLE IF NOT EXISTS scores (
     election TEXT NOT NULL,
     recipient_id TEXT NOT NULL,
     seat TEXT NOT NULL,
@@ -66,6 +65,6 @@ CREATE TABLE scores (
     dwnom2 FLOAT,
     irt_cfscore FLOAT,
     composite_score FLOAT,
-    PRIMARY KEY (recipient_id, election, seat),
-    FOREIGN KEY (recipient_id, election, seat) REFERENCES candidates(recipient_id, election, seat)
+    PRIMARY KEY (election, recipient_id, seat),
+    FOREIGN KEY (election, recipient_id, seat) REFERENCES candidates(election, recipient_id, seat)
 );
