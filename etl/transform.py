@@ -62,7 +62,7 @@ def transform_data(df_raw):
 
     elections_df = df[[
         "election", "recipient_id", "seat", "cycle", "fec_year", "distcyc", "district", "district_pres_vs",
-        "fec_cand_status", "general_vote_pct", "general_winner", "primary_vote_pct", "primary_winner"
+        "incumbent_status", "fec_cand_status", "general_vote_pct", "general_winner", "primary_vote_pct", "primary_winner"
     ]]
     
     finances_df = df[[
