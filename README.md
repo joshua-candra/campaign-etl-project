@@ -25,7 +25,7 @@ pip install -r requirements.txt
 ### 3. Configure Environment Variables
 Before running, create an '.env' file with the following line of PostgreSQL details. The default port number in PostgreSQL is 5432.
 
-DATABASE_URL=postgresql://<username>:<password>@localhost:<port number>/campaign_db
+DATABASE_URL=postgresql://username:password@localhost:5432/campaign_db
 
 ### 4. Create Database in PostgreSQL
 In pgAdmin4, create a new database called "campaign_db", then run the below command in the terminal:
@@ -38,3 +38,5 @@ To run, use the below command in the terminal while location is at campaign-etl-
 dagster dev -m campaign_dagster.definitions
 
 Open Dagster using the link (http://127.0.0.1:3000/assets) and materialize all assets.
+
+If you get an error saying that a relation/table does not exist, manually run the SQL query from create-tables.sql in your SQL editor (pgAdmin/Workbench).
