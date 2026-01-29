@@ -12,6 +12,7 @@ def transform_data(df_raw):
         "party": "party",
         "state": "state",
         "seat": "seat",
+        "recipient.type": "rec_type",
         "ICPSR": "icpsr_id",
         "FEC.ID": "fec_id",
 
@@ -56,7 +57,7 @@ def transform_data(df_raw):
     # Split into multiple DataFrames
     candidates_df = df[[
         "election", "recipient_id", "seat", "campaign_id", "full_name", "first_name", "last_name",
-        "party", "gender", "state", "icpsr_id", "fec_id"
+        "party", "gender", "state", "rec_type", "icpsr_id", "fec_id"
     ]]
 
     elections_df = df[[
